@@ -1,4 +1,3 @@
 # prog2
-Here i'm going to learn what i have to do to programming
-la vai
+It's going to be a good year with a lot of good learnigs and succes
 
