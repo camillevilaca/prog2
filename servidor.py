@@ -11,8 +11,14 @@ def atualizar():
 
 @app.route("/excluir_pessoa")
 def excluir():
-    antiga_pessoa = Pessoa(nome,email)
-    lista.remove(antiga_pessoa)
+    achou = None
+    nome = request.args.get("nome")
+    for p in lista:
+        if p.nome == nome:
+            achou = p
+            break
+    if achou != None:
+        lista.remove(achou)
     return render_template("exibir_mensagem.html")
 
 @app.route("/incluir_pessoa")
