@@ -1,9 +1,9 @@
 from flask import Flask , render_template, request
 from modelo import Pessoa
 app = Flask (__name__)
-lista = [Pessoa("Manoel Carlos Farias","manoelcarlosfarias_@sanidet.com.br"),
-    Pessoa("Luís Ferreira","luisrodriguesferreira@rhyta.com"),
-    Pessoa("Stephanie Lowman","stephanieclowman@teleworm.us")
+lista = [Pessoa("Maria_Carolina_Mestre_Vilaça","mcarolvilaca@bol.com.br"),
+    Pessoa("Perly_Nobile_Mestre","perlymestre@gmail.com"),
+    Pessoa("Isabelle_Vitoria_Mestre_Vilaça","isbellevilaca7@gmail.com")
     ]  
 @app.route("/form_atualizar_pessoa")
 def atualizar():
@@ -47,5 +47,3 @@ def listar_padrao():
     return render_template("listar-pessoa.html")
 
 app.run(debug= True, host= "0.0.0.0")
-
-
