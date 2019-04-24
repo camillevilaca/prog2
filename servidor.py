@@ -1,4 +1,4 @@
-from flask import Flask , render_template, request
+from flask import Flask , render_template, request, session
 from modelo import Pessoa
 app = Flask (__name__)
 lista = [Pessoa("Maria_Carolina_Mestre_Vilaça","mcarolvilaca@bol.com.br"),
@@ -45,5 +45,26 @@ def listar ():
 @app.route("/")
 def listar_padrao():
     return render_template("listar-pessoa.html")
+@app.route("/form_login")
+def form_login():
+    return render_template("form_login.html")
 
+@app.route ("/login")
+def login():
+    login = request.args.get ("login")
+    senha = request.args.get ("senha")
+    if login == "camille_vilaca" and senha =="123":
+        session["user"] = login
+        return render_template ("listar-pessoa.html")
+    else:
+        return "login/senha invalidos"
+
+@app.route ("/logout")
+def logout():
+    session.pop("user")
+    return render_template ("listar-pessoa.html")
+
+
+app.config["SECRET_KEY"] = "ldjeoeoedkdoe"
 app.run(debug= True, host= "0.0.0.0")
+

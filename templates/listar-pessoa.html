@@ -10,13 +10,26 @@
 		 {{p.nome}}
 		 {{p.email}} 
 		 <br> 
+
         					<a href="/form_atualizar_pessoa">Atualizar pessoa</a>
 							<a href="/excluir_pessoa?nome={{p.nome}}">Excluir pessoa</a>
+
+
 		<br>				 
 		{%endfor%}
+			{% if session ["user"] %}
 			<h2>Para incluir nova pessoa 
     			<div class="button">
         		<a href="/incluir_pessoa"><button>Incluir Pessoa</button></a>
+			</h2>
+			{%endif%}
+			<h2>Login 
+    			<div class="button">
+        		<a href="/form_login"><button>login</button></a>
+			</h2>
+			<h2>Logout 
+    			<div class="button">
+        		<a href="/logout"><button>logout</button></a>
         	</h2>
  	</body>
  </html>
