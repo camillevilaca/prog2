@@ -5,10 +5,6 @@ lista = [Pessoa("Maria_Carolina_Mestre_Vilaça","mcarolvilaca@bol.com.br"),
     Pessoa("Perly_Nobile_Mestre","perlymestre@gmail.com"),
     Pessoa("Isabelle_Vitoria_Mestre_Vilaça","isbellevilaca7@gmail.com")
     ]  
-@app.route("/form_atualizar_pessoa")
-def atualizar():
-    return render_template("form_atualizar_pessoa.html")
-
 @app.route("/excluir_pessoa")
 def excluir():
     achou = None
@@ -44,7 +40,33 @@ def listar ():
 
 @app.route("/")
 def listar_padrao():
-    return render_template("listar-pessoa.html")
+    return render_template("listar-pessoa.html", geral=lista)
+
+@app.route("/form_atualizar_pessoa")
+def form_atualizar_pessoa():
+    nome = request.args.get("nome")
+    for Pessoa in lista:
+        if nome == Pessoa.nome:
+            return render_template("form_atualizar_pessoa.html", Pessoa = Pessoa)
+        else:
+            return "ERRO"
+
+@app.route("/atualizar_pessoa")
+def atualizar_pessoa():
+    nome = request.args.get ("nome")
+    email = request.args.get ("email")
+    nome_original = request.args.get("nome_original")
+    indice = -1
+    for i in range (len(lista)):
+        if lista[i].nome==nome_original:
+            indice = i
+            break
+        if indice >=0:
+            lista[indice] = Pessoa(nome,email)
+        return render_template("listar-pessoa.html")
+        
+
+
 @app.route("/form_login")
 def form_login():
     return render_template("form_login.html")

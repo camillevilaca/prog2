@@ -6,16 +6,16 @@
  	</head>
  	<body>
 		 <h1>Pessoas Cadastradas:</h1>
-		 {% for p in geral %}
-		 {{p.nome}}
-		 {{p.email}} 
-		 <br> 
+		{% for p in geral %}
+		 	{{p.nome}}
+		 	{{p.email}} 
+		 	<br> 
 
-        					<a href="/form_atualizar_pessoa">Atualizar pessoa</a>
-							<a href="/excluir_pessoa?nome={{p.nome}}">Excluir pessoa</a>
+        				<a href="/form_atualizar_pessoa?nome={{p.nome}}">Atualizar pessoa</a>
+						<a href="/excluir_pessoa?nome={{p.nome}}">Excluir pessoa</a>
 
 
-		<br>				 
+			<br>				 
 		{%endfor%}
 			{% if session ["user"] %}
 			<h2>Para incluir nova pessoa 

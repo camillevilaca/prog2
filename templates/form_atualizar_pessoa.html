@@ -7,18 +7,11 @@
           <title>form_atualizar_pessoa</title>
    	</head>
 	<body> 
-		<form action ="/cadastrar_pessoa">
-			<div>
-        		<label for="name">Nome:</label>
-        		<input type="text" name="nome" value="" placeholder="Manoel Carlos Farias"/>
-    		</div>
-    		<div>
-        		<label for="mail">E-mail:</label>
-        		<input type="text" name="email" id="mail" />
-    		</div>
-    		<div class="button">
-        		<button type="submit">Enviar</button>
-    		</div>
+		<form action ="/atualizar_pessoa">
+			nome: <input type=text name=nome value= "{{Pessoa.nome}}"><br>
+			email: <input type=text name=email value = "{{Pessoa.email}}"><br>
+			<input type=submit value=Alterar>
+			<input type = hidden name=nome_original value= "{{Pessoa.nome}}">
 		</form>
 	</body>
 </html>
