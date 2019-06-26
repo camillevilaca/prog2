@@ -1,21 +1,18 @@
-from flask import Flask , render_template, request, session
-from modelo import Pessoa
+from flask import Flask , render_template, request,redirect, session
+from modelo import os
+from peewee import*
+from modelo import * 
 app = Flask (__name__)
-lista = [Pessoa("Maria_Carolina_Mestre_Vilaça","mcarolvilaca@bol.com.br"),
-    Pessoa("Perly_Nobile_Mestre","perlymestre@gmail.com"),
-    Pessoa("Isabelle_Vitoria_Mestre_Vilaça","isbellevilaca7@gmail.com")
-    ]  
+app.config["SECRET_KEY"] = "685547"
+pessoas = []  
 @app.route("/excluir_pessoa")
 def excluir():
-    achou = None
-    nome = request.args.get("nome")
-    for p in lista:
-        if p.nome == nome:
-            achou = p
-            break
-    if achou != None:
-        lista.remove(achou)
-    return render_template("exibir_mensagem.html")
+    if session["usuario"]:
+    cpf = request.args.get("cpf")
+    for p in pessoas:
+        if p.cpf == cpf:
+            pessoas.remove(p)
+    return render_template("exibir_mensagem.html", mensagem="pessoa excluída")
 
 @app.route("/incluir_pessoa")
 def incluir():
@@ -28,15 +25,17 @@ def exibir():
 @app.route("/cadastrar_pessoa")
 def cadastrar():
     nome = request.args.get("nome")
-    email = request.args.get ("email")
-    nova_pessoa = Pessoa(nome, email)
-    lista.append (nova_pessoa)
-    return render_template ("exibir_mensagem.html")
+    endereco = request.args.get ("endereco")
+    cpf = request.argas.get("cpf")
+    Pessoa.create(nome=nome,
+                  endereco=endereco
+                  cpf=cpf)
+    return render_template ("exibir_mensagem.html", mensagem="cadastro concluído", pessoa=(nome,endereco,cpf))
 
-        
+
 @app.route("/listar-pessoa")
 def listar ():
-    return render_template("listar-pessoa.html", geral=lista)
+    return render_template("listar-pessoa.html", lista=Pessoa.select())
 
 @app.route("/")
 def listar_padrao():
@@ -53,19 +52,11 @@ def form_atualizar_pessoa():
 
 @app.route("/atualizar_pessoa")
 def atualizar_pessoa():
-    nome = request.args.get ("nome")
-    email = request.args.get ("email")
-    nome_original = request.args.get("nome_original")
-    indice = -1
-    for i in range (len(lista)):
-        if lista[i].nome==nome_original:
-            indice = i
-            break
-        if indice >=0:
-            lista[indice] = Pessoa(nome,email)
-        return render_template("listar-pessoa.html")
-        
-
+   	cpf = request.args.get("cpf")
+	for p in pessoas:
+		if p.cpf == cpf:
+			return render_template("form_alterar_pessoa.html", informacao=p)
+	return "pessoa não encontrada"
 
 @app.route("/form_login")
 def form_login():
